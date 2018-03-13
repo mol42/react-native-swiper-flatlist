@@ -96,21 +96,11 @@ export default class SwiperFlatList extends PureComponent {
     }
     const isEnd = index === this._data.length - 1;
 
-    if (autoplayLoop || !isEnd) {
-      this.autoplayTimer = setTimeout(() => {
-        const nextIndex = (index + 1) % this._data.length;
-        this._scrollToIndex(nextIndex, !isEnd);
-      }, autoplayDelay * 1000);
-    }
-    if (isEnd) {
-      // When scroll to the end and animated is false need to restart the autoplay
-      setTimeout(() => {
-        this.autoplayTimer = setTimeout(
-          () => this._scrollToIndex(1, true),
-          autoplayDelay * 1000
-        );
-      }, autoplayDelay * 1000);
-    }
+    this.autoplayTimer = setTimeout(() => {
+      const nextIndex = isEnd ? 0 : (index + 1) % this._data.length;
+      this._scrollToIndex(nextIndex, !isEnd);
+      this._autoplay(nextIndex);
+    }, autoplayDelay * 1000);
   };
 
   _scrollToIndex = (index, animated = true) => {
