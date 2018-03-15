@@ -27,7 +27,8 @@ export default class Pagination extends PureComponent {
       paginationIndex,
       scrollToIndex,
       paginationDefaultColor,
-      paginationActiveColor
+      paginationActiveColor,
+      paginationStyle
     } = this.props;
     return (
       <View style={styles.paginationContainer}>
@@ -35,6 +36,7 @@ export default class Pagination extends PureComponent {
           <TouchableOpacity
             style={[
               styles.pagination,
+              paginationStyle || {},
               paginationIndex === index
                 ? { backgroundColor: paginationActiveColor }
                 : { backgroundColor: paginationDefaultColor }
